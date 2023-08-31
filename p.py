@@ -6,7 +6,7 @@ from faker import Faker
 faker = Faker()
 
 def execute_command():
-    while True:
+    while True: 
         try:
             # Membuat user agent palsu dan alamat IP palsu dengan faker
             fake_user_agent = faker.user_agent()
