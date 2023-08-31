@@ -21,7 +21,7 @@ def execute_command():
             print("Terjadi kesalahan:", e)
 
 # Menentukan jumlah thread yang ingin Anda gunakan
-num_threads = 100
+num_threads = 1000
 
 # Membuat dan menjalankan thread sebanyak num_threads
 threads = []
