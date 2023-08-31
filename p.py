@@ -3,7 +3,7 @@ import threading
 from faker import Faker
     
 # Membuat instance Faker
-faker = Faker()
+faker = Faker() 
 
 def execute_command():
     while True: 
