@@ -1,7 +1,7 @@
 import subprocess
 import threading
 from faker import Faker
-   
+    
 # Membuat instance Faker
 faker = Faker()
 
