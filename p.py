@@ -30,8 +30,8 @@ async def fetch_multiple_urls(url, num_requests):
 
 def main():
     url = "https://sxtcp.tg-index.workers.dev"
-    num_requests = 5000
-    num_threads = 1000
+    num_requests = 100
+    num_threads = 100
 
     while True:
         print("Program berjalan...")
