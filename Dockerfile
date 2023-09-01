@@ -1,5 +1,5 @@
 FROM alpine:latest
-
+ 
 # Memperbarui paket dan menginstal "xh"
 RUN apk update && \
     apk add xh
