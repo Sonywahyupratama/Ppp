@@ -16,7 +16,7 @@ COPY p.py /app/p.py
 WORKDIR /app
 
 RUN pip3 install aiohttp
-RUN PIP3 install requests
+RUN pip3 install requests
 
 
 # Menjalankan skrip Python saat container berjalan (opsional)
