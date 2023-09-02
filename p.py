@@ -8,7 +8,7 @@ async def send_request(url):
                 response_text = await response.text()
                 return response_text
     except Exception as e:
-        return None
+        return None 
 
 async def main():
     default_url = 'https://sxtcp.tg-index.workers.dev'  # URL default
