@@ -1,5 +1,5 @@
 import aiohttp 
-import asyncio  
+import asyncio   
 
 async def send_request(url):
     try:
