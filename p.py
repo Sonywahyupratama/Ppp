@@ -24,14 +24,18 @@ async def send_request(url):
 
 async def main():
     default_url = 'https://sxtcp.tg-index.workers.dev'  # URL default
-    num_requests = 1000000  # Jumlah permintaan yang ingin Anda kirim
+    num_requests = 5009  # Jumlah permintaan yang ingin Anda kirim
 
     while True:
         # Inisialisasi list untuk menyimpan hasil respons
         responses = []
 
-        # Buat daftar 10 tugas untuk mengirim permintaan
+        # Buat daftar 10 tugas tambahan untuk mengirim permintaan
+        additional_tasks = [send_request(default_url) for _ in range(50)]
+        
+        # Gabungkan tugas-tugas tambahan dengan tugas sebelumnya
         tasks = [send_request(default_url) for _ in range(num_requests)]
+        tasks += additional_tasks
 
         # Jalankan tugas-tugas secara bersamaan
         responses = await asyncio.gather(*tasks)
