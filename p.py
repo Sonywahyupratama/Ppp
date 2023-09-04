@@ -1,4 +1,4 @@
-import aiohttp
+import aiohttp 
 import asyncio
 
 # Konfigurasi IP palsu
