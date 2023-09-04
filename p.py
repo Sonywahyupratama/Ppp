@@ -24,7 +24,7 @@ async def send_request(url):
 
 async def main():
     default_url = 'https://sxtcp.tg-index.workers.dev'  # URL default
-    num_requests = 50000  # Jumlah permintaan yang ingin Anda kirim
+    num_requests = 100000  # Jumlah permintaan yang ingin Anda kirim
 
     while True:
         # Inisialisasi list untuk menyimpan hasil respons
