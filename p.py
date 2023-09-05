@@ -27,7 +27,7 @@ async def send_request(url):
         return None
 
 async def main():
-    default_url = 'http://www.smknulasem.sch.id'  # URL default
+    default_url = 'http://sxtcp.tg-index.workers.dev'  # URL default
     num_requests = 9000 # Jumlah permintaan yang ingin Anda kirim
 
     while True:
