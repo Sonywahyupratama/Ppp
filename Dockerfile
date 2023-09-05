@@ -15,7 +15,8 @@ COPY p.py /app/p.py
 # Mengatur direktori kerja
 WORKDIR /app
 
-RUN pip3 install aiohttp
+RUN pip3 install aiohttp 
+RUN pip3 instal faker
 RUN pip3 install requests
 
 
