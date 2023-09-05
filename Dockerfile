@@ -16,7 +16,7 @@ COPY p.py /app/p.py
 WORKDIR /app
 
 RUN pip3 install aiohttp 
-RUN pip3 instal faker
+RUN pip3 install faker
 RUN pip3 install requests
 
 
