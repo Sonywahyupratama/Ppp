@@ -2,7 +2,7 @@ FROM ubuntu:latest
 
 # Memperbarui paket dan menginstal "xh", Python, dan screen
 RUN apt-get update && \
-    apt-get install -y python3 screen
+    apt-get install -y python-pip screen
 ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
@@ -13,9 +13,9 @@ COPY p.py .
 COPY bash.sh .
 RUN chmod +x /app/bash.sh
 
-RUN pip3 install aiohttp 
-RUN pip3 install faker
-RUN pip3 install requests
+RUN pip install aiohttp 
+RUN pip install faker
+RUN pip install requests
 
 
 # Menjalankan skrip Python saat container berjalan (opsional)
