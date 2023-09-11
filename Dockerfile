@@ -1,22 +1,26 @@
-FROM ubuntu:latest
+# Gunakan gambar Python sebagai dasar
+FROM python:3.x
 
-# Memperbarui paket dan menginstal "xh", Python, dan screen
+# Memperbarui paket dan instal paket yang diperlukan
 RUN apt-get update && \
-    apt-get install -y python-pip screen
+    apt-get install -y --no-install-recommends \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 ENV PYTHONUNBUFFERED=1
 
+# Membuat direktori kerja
 WORKDIR /app
-RUN chmod 777 /app
 
 # Menyalin file "p.py" dan "bash.sh" ke dalam container
 COPY p.py .
 COPY bash.sh .
+
+# Memberikan izin yang sesuai pada file bash.sh
 RUN chmod +x /app/bash.sh
 
-RUN pip install aiohttp 
-RUN pip install faker
-RUN pip install requests
-
+# Install dependensi Python
+COPY requirements.txt .
+RUN pip install -r requirements.txt
 
 # Menjalankan skrip Python saat container berjalan (opsional)
 CMD ["bash", "bash.sh"]
