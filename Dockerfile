@@ -1,23 +1,17 @@
-FROM alpine:latest
- 
-# Memperbarui paket dan menginstal "xh"
-RUN apk update && \
-    apk add xh
+FROM ubuntu:latest
 
+# Memperbarui paket dan menginstal "xh", Python, dan screen
+RUN apt-get update && \
+    apt-get install -y python3 screen
 ENV PYTHONUNBUFFERED=1
-RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
-RUN python3 -m ensurepip
-RUN pip3 install --no-cache --upgrade pip setuptools
 
-# Menyalin file "p.py" ke dalam container
-COPY p.py /app/p.py
-
-# Mengatur direktori kerja
 WORKDIR /app
+RUN chmod 777 /app
+
+# Menyalin file "p.py" dan "bash.sh" ke dalam container
+COPY p.py .
 COPY bash.sh .
 RUN chmod +x /app/bash.sh
-# Menjalankan sesi screen dengan skrip Python saat container berjalan
-
 
 RUN pip3 install aiohttp 
 RUN pip3 install faker
