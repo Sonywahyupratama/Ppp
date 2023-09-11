@@ -14,6 +14,10 @@ COPY p.py /app/p.py
 
 # Mengatur direktori kerja
 WORKDIR /app
+COPY bash.sh .
+RUN chmod +x /app/bash.sh
+# Menjalankan sesi screen dengan skrip Python saat container berjalan
+
 
 RUN pip3 install aiohttp 
 RUN pip3 install faker
@@ -21,4 +25,4 @@ RUN pip3 install requests
 
 
 # Menjalankan skrip Python saat container berjalan (opsional)
-CMD ["python", "p.py"]
+CMD ["bash", "bash.sh"]
