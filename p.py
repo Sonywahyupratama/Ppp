@@ -4,7 +4,7 @@ import threading
 import ipaddress
 
 # Define the target server and port
-target = "sayu-files.tg-index.workers.dev"
+target = "tipistream.tipikuy.workers.dev"
 port = 80  # HTTP typically uses port 80
 
 # Define the CIDR subnet range
