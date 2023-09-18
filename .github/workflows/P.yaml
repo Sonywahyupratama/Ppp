@@ -1,0 +1,29 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        range:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build and run Docker image
+      run: |
+        for i in $(seq 1 ${{ matrix.range }}); do
+          docker build . --file Dockerfile --tag ilham
+          docker run -t ilham
+        done
