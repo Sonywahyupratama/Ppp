@@ -4,7 +4,7 @@ import threading
 import ipaddress
 
 # Define the target server and port
-target = "doujindesu.tv"
+target = "worker-young-dream-de51.rx3uprdg.workers.dev"
 port = 80  # HTTP typically uses port 80
 
 # Define the CIDR subnet range
