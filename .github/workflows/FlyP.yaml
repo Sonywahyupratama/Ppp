@@ -20,4 +20,8 @@ jobs:
       - run: flyctl deploy -a tipi13 
       - run: flyctl deploy -a tipi14
       - run: flyctl deploy -a tipi15 
-      - run: flyctl deploy -a tipi16
+      - run: flyctl deploy -a tipi16 
+      - run: flyctl deploy -a tipi11
+      - run: flyctl deploy -a tipi12 
+      - run: flyctl deploy -a dawn-star-3234
+      
