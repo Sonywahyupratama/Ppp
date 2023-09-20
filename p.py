@@ -22,7 +22,7 @@ def generate_fake_ips(subnet, count):
     return fake_ips
 
 # Generate fake IPs within the CIDR range
-generated_fake_ips = generate_fake_ips(subnet, 109)  
+generated_fake_ips = generate_fake_ips(subnet, 101)  
 
 # Function to send HTTP GET requests with a random fake IP
 def send_request_with_random_fake_ip():
