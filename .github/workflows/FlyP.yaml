@@ -1,4 +1,4 @@
-name: Fly Deploy gacor
+name: Fly Deploy 
 
 on: 
   push:
