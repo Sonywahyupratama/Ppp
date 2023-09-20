@@ -19,8 +19,7 @@ COPY bash.sh .
 RUN chmod +x /app/bash.sh
 
 # Install dependensi Python
-COPY requirements.txt .
-RUN pip3 install -r requirements.txt
+
 
 # Menjalankan skrip Python saat container berjalan (opsional)
 CMD ["bash", "bash.sh"]
