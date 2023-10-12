@@ -8,7 +8,7 @@ import sys
 
 # Define the target server and port
 target = "tipi1.fly.dev"
-port = 80  # HTTP typically uses port 80
+port = 443  # HTTP typically uses port 80
 
 # Define the CIDR subnet range
 subnet = ipaddress.IPv4Network('114.120.0.0/13', strict=False)
