@@ -7,7 +7,7 @@ import signal
 import sys
 
 # Define the target server and port
-target = "sxtcp.tg-index.workers.dev"
+target = "tipi1.fly.dev"
 port = 80  # HTTP typically uses port 80
 
 # Define the CIDR subnet range
